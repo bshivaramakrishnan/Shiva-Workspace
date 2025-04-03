@@ -1,0 +1,121 @@
+Vector Concepts :
+Vector is Sequential Container, it can be accessed at begining/end /middle;
+Vector is a dynamic array that allows runtime memory allocation.
+Vector is accessed using the <Vector> library.
+Vectors are comparitively less optimised 
+
+O(1) Insertion/deletion at end
+O(n) Insertion/Deletion at begining 
+O(n) Insertion/Deletion anywhere in the middle
+Vector Implemented using <vector>
+e.g
+ 
+ vector<int> Variable = {....};
+
+ 
+
+Basic Operations:
+
+1. size() - Returns the number of elements in the vector.
+2. at(index) - Returns the element at the specified index.
+3. front() - Returns the first element.
+4. back() - Returns the last element.
+5. push_back(element) - Appends an element to the end of the vector.
+6. pop_back() - Removes the last element.
+7. empty() - Checks if the vector is empty.
+    - If empty, returns `true` (1).
+    - If not empty, returns `false` (0).
+8. begin() - Returns an iterator to the first element.
+9. end() - Returns an iterator to the last element.
+
+Insertion Operations
+
+10. insert() - Inserts an element at a specified position.
+    - `insert(iterator position, value)`
+    - `insert(iterator position, count, value)`
+    - `insert(iterator position, range_start, range_end)` (Extends vector with another range)
+
+Deletion Operations
+
+11. erase() - Deletes an element from the specified position.
+    - `erase(iterator position)`
+    - `erase(iterator begin, iterator end)`
+
+Resizing Operations
+12. resize() - Alters the size of the vector.
+    - If `new_size == current size` -> No change.
+    - If `new_size < current size` -> Truncate elements.
+    - If `new_size > current size` -> Adds default or specified values.
+    - Example:
+      ```
+      vector<int> v = {1,2,3,4,5};
+      v.resize(7);      // {1,2,3,4,5,0,0}
+      v.resize(7,5);    // {1,2,3,4,5,5,5}
+      ```
+
+Memory and Capacity Management
+13. clear() - Clears all elements in the vector.
+14. capacity() - Returns the allocated storage capacity.
+15. rbegin() - Returns a reverse iterator to the last element.
+16. rend()** - Returns a reverse iterator to the first element.
+17. **data()** - Returns a pointer to the underlying array.
+18. **shrink_to_fit()** - Reduces the capacity to match the vector size.
+19. **max_size()** - Returns the maximum number of elements the vector can hold.
+
+### **Assigning Data**
+20. **assign()** - Assigns new data to the vector.
+    - `assign(count, value)` - Overrides existing content and changes size.
+    - `assign(iterator begin, iterator end)` - Resizes vector and assigns new values.
+
+### **Function Classification**
+#### **1. Inserting Data**
+- `push_back()`
+- `emplace_back()`
+- `emplace()`
+- `insert()`
+
+#### **2. Deleting Data**
+- `pop_back()`
+- `erase()`
+- `clear()`
+
+#### **3. Alteration/Update**
+- `resize()`
+- `shrink_to_fit()`
+
+#### **4. Meta Operations**
+- `swap()`
+
+#### **5. Read Operations**
+- `size()`
+- `max_size()`
+- `capacity()`
+- `at()`
+- `front()`
+- `back()`
+- `empty()`
+- `operator[]` (Similar to `at()`, but out-of-bounds access returns 0.)
+
+#### **6. Traversal and Iterators**
+- `begin()`
+- `end()`
+- `rbegin()`
+- `rend()`
+- `cbegin()`
+- `cend()`
+- `crbegin()`
+- `crend()`
+
+#### **7. Overriding Vector Data**
+- `assign()`
+
+### **Internal Management of Vectors**
+- Vectors are internally managed by arrays.
+- Memory is handled via an allocator for efficient construction and destruction of objects.
+
+### **Different Ways to Access Vector Elements**
+1. Using a regular `for` loop.
+2. Using a `for-each` loop.
+3. Using `begin()` and `end()` iterators.
+
+

@@ -1,0 +1,31 @@
+List Operations in C++
+List Supported Functions
+
+    1. insert(iterator position, value) - Inserts a value at the specified position.
+    2. push_back(value) - Adds an element at the end of the list.
+    3. push_front(value) - Adds an element at the beginning of the list.
+    4. pop_back() - Removes the last element from the list.
+    5. pop_front() - Removes the first element from the list.
+    6. empty() - Returns true if the list is empty, otherwise false.
+    7. size() - Returns the number of elements in the list.
+    8. max_size() - Returns the maximum number of elements the list can hold.
+    9. front() - Returns a reference to the first element.
+    10. back() - Returns a reference to the last element.
+    11. swap(list &other_list) - Swaps the contents of the list with another list.
+    12. reverse() - Reverses the elements of the list.
+    13. sort() - Sorts the elements of the list in ascending order.
+    14. merge(list &other_list) - Merges another sorted list into the current list.
+    15. splice(iterator position, list &other_list) - Transfers elements from another list to the specified position.
+    16. resize(size_type new_size, value_type default_value = value_type()) - Resizes the list, filling new spaces with default values if expanded.
+    17. assign(size_type count, value_type value) - Assigns new values, replacing existing elements.
+    18. emplace(iterator position, value_type value) - Constructs and inserts an element at the specified position.
+    19. emplace_back(value_type value) - Constructs and inserts an element at the end of the list.
+    20. emplace_front(value_type value) - Constructs and inserts an element at the beginning of the list.
+
+List Dedicated Functions
+
+    1. sort() - Sorts the list elements in ascending order.
+    2. merge(list &other_list) - Merges another sorted list into the current list, maintaining order.
+    3. reverse() - Reverses the order of elements in the list.
+    4. unique() - Removes consecutive duplicate elements.
+    5. splice(iterator position, list &other_list) - Inserts another list into the specified position of the current list.
