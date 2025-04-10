@@ -77,9 +77,9 @@ class Account
             }
             cout << "Transaction History:\n";
             for (auto& t : transactions)
-                cout << t.tranc_type << ": $" << t.amount << "\tCurrent Balance :" << t.balance << "\tTransaction time: " << t.timestamp << endl;
+                cout << t.tranc_type<< ": $" << t.amount << "\tCurrent Balance :" << t.balance << "\tTransaction time: " << t.timestamp << endl;
         }
 
         string getUserName() const { return userName; }
 };
-#endif // !ACCOUNT_H
+#endif 

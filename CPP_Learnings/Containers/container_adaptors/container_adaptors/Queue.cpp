@@ -11,7 +11,7 @@ void displayQueue(queue<int> q) {
     cout << endl;
 }
 
-int main() {
+int main() { 
     queue<int> q;
     int choice;
 

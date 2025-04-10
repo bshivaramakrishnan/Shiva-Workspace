@@ -1,0 +1,202 @@
+﻿
+Threads are a unit of a process, they are light weight and small.
+
+1 -> Threading when done using same procesor it runs concurrently
+2 -> Threading when done using multiple processorit runs parallel
+3 -> Each Thread has its own stack but they share the heap Memory
+
+Threading is acheived by 3 ways :
+
+1) Funtion : 
+			void rawr(int x){
+			....
+			}
+			main(){
+			int a;
+			thread thread_obj(rawr,a);
+			thread_obj.join();
+			}
+
+2) Lambda Function:
+					// Define a lambda expression and start a thread that runs that lambda expression
+					auto rar = [](params) {};
+					std::thread rar_thread(rar, params);
+
+					// Or pass the lambda directly!
+					std::thread rar_thread([](params) {};, params);
+3) Functors : 
+				// Define a functor and start a thread that runs the functor's function call
+				class raa_object_class {
+				void operator()(params) {}
+				}
+
+				std::thread raa_thread(raa_class_object(), params);
+
+Thread Specific Functions : 
+		
+		#include <thread>
+		#include <chrono>
+
+		// These can be used within a thread
+
+		// Get thread ID of thread
+		std::this_thread::get_id();
+
+		// Give priority to other threads, pause execution
+		std::this_thread::yield();
+
+		// Sleep for some amount of time
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+
+		// Sleep until some time
+		std::chrono::system_clock::time_point time_point = std::chrono::system_clock::now()
+														   + std::chrono::seconds(10);
+		std::this_thread::sleep_until(time_point)
+
+Sharing Data:
+
+Global Variables
+
+All global and static variables that are initialised at compile time can be accessed by threads.
+Since the threads should know the addresses for them.
+
+Pass BY Reference : 
+					Threads are usualy called by pas by valueand not thr refernce een if the functions
+					arguements is passes by reference;
+
+					To pass reference : 
+					void ref_function(int &a, int b) {}
+
+					int val;
+					std::thread ref_function_thread(ref_function, std::ref(val), 2);
+
+					thread functions cant return anything, So pass by reference is how it was be 
+					acheived.
+
+
+Note: 
+That this does NOT create a separate instance of the static variable per thread instance. 
+This is because static variables are initialised once when the compiler goes over their declaration.
+
+If you want to have 'static' variables that are static within the scope of each particular thread, 
+use thread_local variables instead. Then each thread will have its own version of the static variable,
+and the static variable will only be destroyed on thread exit.
+
+void method()
+{
+  thread_local int var = 0;
+  var++;
+}
+
+Waiting, Killing, and Detaching :
+
+Waiting : 
+	
+	join() : The main thread will wait until all the threads are comepleted and wont be deleted till then.
+	
+	To Check if a thread is Joinable: 
+
+	if (exmaple_thread.joinable())
+	{
+	 example_thread.join(); 
+	}
+
+Kill a Thread
+
+	Use return, not std::terminate()! terminate() 
+	will kill your entire program process, not an individual thread.
+
+
+Detaching a Thread
+
+	You may detach a thread. That is, split it from the std::thread() object that manages it
+	Once you do that, you won't be able to manage the thread aside from any mutex or shared resources between the 
+	different threads.
+
+	Those detached threads will only exit when the main process is terminated or when the top level function exits.
+
+RACE CONDITION:
+	Always tread safe to read from multiple threads
+
+	Writing from multiple threads could lead to data inconsistency or crash
+
+							Mutable ? 
+					Yes					NO
+					----------------------
+		S	
+		H	Yes	|	Race Cond.	|		OK
+		A		|-----------------------------
+		R	NO	|	OK			|		OK
+		E		|
+		D		|
+		?		
+
+RACE CONDITION PREVENTION:
+	
+	ATOMICS:
+	An std::atomic is just one way.
+
+	An atomic type is a special data type that supports atomic operations — operations that are:
+
+    Thread-safe — no need for external locks like mutexes.
+
+    Uninterrupted — once an operation starts, nothing can interrupt it until it finishes (not even other threads).
+
+    Think of it like this: if multiple people try to edit the same document, 
+	atomic types are like each person getting their own safe, temporary copy to edit,
+	so no one messes with anyone else’s changes.
+
+	int x = 0;
+	x++;  // Not atomic!
+
+	USING ATOMIC : 
+	#include <atomic>
+	std::atomic<int> x(0);
+	x++;  // Atomic: guaranteed thread-safe
+
+			Feature			|		Regular Types		Mutex-Protected		Atomic Types
+			----------------|--------------------------------------------------------------
+		Thread-safe			|		 No				     Yes				    Yes
+		Lock-free			|		 Yes				 No						Yes (mostly)
+		Fast in contention	|		 Yes				 No						Depends
+		Easy to use			|		 Yes				 Boilerplate			Simple
+
+
+
+	Mutex and Locks:
+
+	Used to prevent Race Condition
+
+	How it works: 
+				The thread that access the shared resource locks the mutex
+				Critical Section -> This State is critical Section
+				Unlocks the Mutex once the process is over
+	Tends to Slow Down program due to Overheads
+	They are owned by the thread that takes it. Hence, mutual exclusion!
+	They are the interface through which you can engage locks for your code!
+
+DeadLocks:
+						waiting	for 				Assigned to
+						------------> Resource 1 ------------>
+						|								   	|
+					Process 1							 Process 2
+						|									|
+						<------------ Resource 2 <------------
+						Assigned to					waiting for
+	
+	No Operation is Performed
+
+	Methods for handling deadlock
+
+   -> Deadlock prevention or avoidance: The idea is to not let the system into deadlock state. One can zoom into
+   each category individually, Prevention is done by negating one of above mentioned necessary conditions for deadlock.
+
+   -> Deadlock detection and recovery: Let deadlock occur, then do preemption to handle it once occurred.
+
+   -> Ignore the problem all together: If deadlock is very rare, then let it happen and reboot the system.
+	This is the approach that both Windows and UNIX take.
+
+
+	
+	TIMED_MUTEX:
+		

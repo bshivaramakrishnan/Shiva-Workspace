@@ -1,6 +1,8 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include<chrono>
+#include<ctime>
 
 using namespace std;
 
@@ -8,7 +10,9 @@ class Transaction {
 public:
     string tranc_type;
     double amount;
-    Transaction(string type, double amount) : tranc_type(type), amount(amount) {}
+    double balance;
+    long timestamp;
+    Transaction(string type, double amount, double balance ) : tranc_type(type), amount(amount),balance(balance) {}
 };
 
 class Account {
@@ -24,6 +28,7 @@ public:
 
     Account(int accNum, string uName, int p, double bal)
         : accountNumber(accNum), userName(uName), pin(p), balance(bal) {}
+    
 
     bool authenticate(int p) {
         if (pin == p) {
@@ -34,26 +39,26 @@ public:
     void deposit(double amount) {
         if (amount <= 0) {
             cout << "Invalid amount! Must be greater than 0.\n";
-            return;
+            
         }
         balance += amount;
-        transactions.emplace_back("Deposit", amount);
+        transactions.emplace_back("Deposit", amount, balance);
         cout << "Deposit successful!\n";
     }
 
-    bool withdraw(double amount) {
+    void withdraw(double amount) {
         if (amount <= 0) {
             cout << "Invalid amount! Must be greater than 0.\n";
-            return false;
+            
         }
         if (amount > balance) {
             cout << "Insufficient balance!\n";
-            return false;
+            
         }
         balance -= amount;
-        transactions.emplace_back("Withdraw", amount);
+        transactions.emplace_back("Withdraw", amount, balance);
         cout << "Withdrawal successful!\n";
-        return true;
+        
     }
 
     void displayBalance() {
@@ -63,11 +68,11 @@ public:
     void displayTransactions() {
         if (transactions.empty()) {
             cout << "No transactions available.\n";
-            return;
+            
         }
         cout << "Transaction History:\n";
         for (auto& t : transactions)
-            cout << t.tranc_type << ": $" << t.amount << endl;
+            cout << t.tranc_type << ": $" << t.amount <<"   Balance :"<<t.balance<< endl;
     }
 
     string getUserName() const { return userName; }
