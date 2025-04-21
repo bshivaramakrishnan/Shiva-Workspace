@@ -1,0 +1,3 @@
+moduletype = 2
+servertoconnect = 192.168.108.101
+port = 7000
